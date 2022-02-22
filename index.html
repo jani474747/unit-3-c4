@@ -42,29 +42,30 @@
 
   import sidebar from "./components/sidebar.js";
 
-  import { apiCall, appendArticles } from "./scripts/main.js";
+  //import { apiCall, appendArticles } from "./scripts/main.js"; 
+  let newsurl=`https://shrouded-earth-23381.herokuapp.com/api/headlines/india`
 
-  let sidebar_div = document.getElementById("sidebar");
+import{apiCall,appendArticles} from "./scripts\main.js"
 
-  sidebar_div.innerHTML = sidebar();
-  
+let data=await apiCall(newsurl);
 
-   
-   let image_data = await apiCall("https://shrouded-earth-23381.herokuapp.com/api/headlines/india");
-    console.log(image_data)
-   let parent = document.getElementById("main");
-   appendArticles(image_data,parent);
-   
-   let input = document.getElementById("searchbar");
+console.log(data)
 
-   input.addEventListener("keypress",(e)=>{
-     if(e.key == "Enter"){
-       let input_value = document.getElementById("searchbar").value;
 
-       localStorage.setItem("search_term",input_value);
+ let appendmain=document.getElementById('main');
 
-       window.location.href = "search.html";
-     }
-   })
+ appendArticles(data, appendmain)
+
+ let inputsearch=document.getElementById("search");
+
+ inputsearch.addEventListener("keypress",(ele)=> {
+   if(ele.code=="Enter"){
+     let val=inputsearch.value;
+
+     localStorage.setItem("search_term",JSON.stringify(val))
+     window.location.href="search.html"
+
+     console.log(val)
+   }
+  });
 </script>
-
